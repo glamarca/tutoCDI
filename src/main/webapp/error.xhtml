@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:body>
+        <ui:composition template="template.xhtml">
+            <ui:param name="nomModule" value="#{bundle.erreur}"/>
+
+            <ui:define name="content">
+                <div class="container">
+                    <div class="panel panel-danger">
+                        <div class="panel-heading"><h3 class="panel-title">#{bundle.erreurMessage}</h3></div>
+                        <div class="panel-body">
+                            <p>#{bundle.erreurMessageEtendu}</p>
+                        </div>
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="back()">#{bundle.retourPagePrecedente}</button>
+                    <br/>
+                    <br/>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="accordion" href="#collapseOne">#{bundle.detailsError} <b class="caret"></b></a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <ui:fragment rendered="#{errorMBean.throwableExiste}">
+                                        <p>#{bundle.code}: #{errorMBean.statusCode}</p>
+                                        <p>#{bundle.type}: #{errorMBean.exceptionType}</p>
+                                        <p>#{bundle.descriptif}: #{errorMBean.message}</p>
+                                        <p>#{bundle.exception}: #{errorMBean.exception}</p>
+                                        <p>#{bundle.page}: #{errorMBean.requestURI}"/></p>
+                                        <p>#{bundle.trace}</p>
+                                        <pre>#{errorMBean.stackTrace}</pre>
+                                    </ui:fragment>
+                                    <ui:fragment rendered="#{! errorMBean.throwableExiste}">
+                                        <p>#{bundle.erreurExceptionInexistant}</p>
+                                    </ui:fragment>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
